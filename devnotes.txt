@@ -4,7 +4,5 @@ npm i --save-dev nodemon
 		"server": "nodemon index"
 
 npx create-react-app client
-npm install react-bootstrap bootstrap
+npm install react-bootstrap bootstrap react-router-dom axios
 them css bootswatch vao index.js: Minty
-
-npm i react-router-dom
