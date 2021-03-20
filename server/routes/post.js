@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const verifyToken = require('../middleware/auth')
 
 const Post = require('../models/Post')
 
 // @route POST api/posts
 // @desc Create post
 // @access Private
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
 	const { title, description, url } = req.body
 
 	// Simple validation
@@ -19,11 +20,12 @@ router.post('/', async (req, res) => {
 		const newPost = new Post({
 			title,
 			description: description || '',
-			url: url || ''
+			url: url || '',
+			user: req.userId
 		})
 
 		await newPost.save()
-		console.log(newPost)
+		res.json({ success: true, message: 'Post created successfully' })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({ success: false, message: 'Internal server error' })
