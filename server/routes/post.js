@@ -47,4 +47,50 @@ router.post('/', verifyToken, async (req, res) => {
 	}
 })
 
+// @route POST api/posts
+// @desc Create post
+// @access Private
+router.put('/', verifyToken, async (req, res) => {
+	const { _id, title, description, url } = req.body
+
+	// Simple validation
+	if (!_id)
+		return res
+			.status(400)
+			.json({ success: false, message: 'Post ID is required' })
+
+	if (!title)
+		return res
+			.status(400)
+			.json({ success: false, message: 'Title is required' })
+
+	try {
+		let updatedPost = {
+			title,
+			description: description || '',
+			url: url || ''
+		}
+
+		const postUpdateCondition = { _id, user: req.userId }
+
+		updatedPost = await Post.findOneAndUpdate(
+			postUpdateCondition,
+			updatedPost,
+			{ new: true }
+		)
+
+		// User not authorised to update post
+		if (!updatedPost)
+			return res.status(401).json({
+				success: false,
+				message: 'Post not found or user not authorised'
+			})
+
+		res.json({ success: true, post: updatedPost })
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({ success: false, message: 'Internal server error' })
+	}
+})
+
 module.exports = router
