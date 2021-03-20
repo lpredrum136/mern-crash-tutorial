@@ -50,14 +50,10 @@ router.post('/', verifyToken, async (req, res) => {
 // @route POST api/posts
 // @desc Create post
 // @access Private
-router.put('/', verifyToken, async (req, res) => {
-	const { _id, title, description, url } = req.body
+router.put('/:id', verifyToken, async (req, res) => {
+	const { title, description, url } = req.body
 
 	// Simple validation
-	if (!_id)
-		return res
-			.status(400)
-			.json({ success: false, message: 'Post ID is required' })
 
 	if (!title)
 		return res
@@ -71,7 +67,7 @@ router.put('/', verifyToken, async (req, res) => {
 			url: url || ''
 		}
 
-		const postUpdateCondition = { _id, user: req.userId }
+		const postUpdateCondition = { _id: req.params.id, user: req.userId }
 
 		updatedPost = await Post.findOneAndUpdate(
 			postUpdateCondition,
@@ -92,5 +88,9 @@ router.put('/', verifyToken, async (req, res) => {
 		res.status(500).json({ success: false, message: 'Internal server error' })
 	}
 })
+
+// @route POST api/posts
+// @desc Create post
+// @access Private
 
 module.exports = router
