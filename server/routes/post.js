@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const verifyToken = require('../middleware/auth')
+const { findOneAndDelete } = require('../models/Post')
 
 const Post = require('../models/Post')
 
@@ -92,5 +93,22 @@ router.put('/:id', verifyToken, async (req, res) => {
 // @route POST api/posts
 // @desc Create post
 // @access Private
+router.delete('/:id', verifyToken, async (req, res) => {
+	try {
+		const postUpdateCondition = { _id: req.params.id, user: req.userId }
+		const deletedPost = await Post.findOneAndDelete(postUpdateCondition)
 
+		// User not authorised to update post
+		if (!deletedPost)
+			return res.status(401).json({
+				success: false,
+				message: 'Post not found or user not authorised'
+			})
+
+		res.json({ success: true, post: deletedPost })
+	} catch (error) {
+		console.log(error)
+		res.status(500).json({ success: false, message: 'Internal server error' })
+	}
+})
 module.exports = router
