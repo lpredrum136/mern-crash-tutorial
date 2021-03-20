@@ -9,7 +9,9 @@ const Post = require('../models/Post')
 // @access Private
 router.get('/', verifyToken, async (req, res) => {
 	try {
-		const posts = await Post.find({ user: req.userId })
+		const posts = await Post.find({ user: req.userId }).populate('user', [
+			'username'
+		])
 		res.json({ success: true, posts })
 	} catch (error) {
 		console.log(error)
