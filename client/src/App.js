@@ -1,8 +1,23 @@
+import './App.css'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Auth from './views/Auth'
+
 function App() {
 	return (
-		<div className='App'>
-			<h1>Learn it</h1>
-		</div>
+		<Router>
+			<Switch>
+				<Route
+					exact
+					path='/login'
+					render={props => <Auth {...props} authRoute='login' />}
+				/>
+				<Route
+					exact
+					path='/register'
+					render={props => <Auth {...props} authRoute='register' />}
+				/>
+			</Switch>
+		</Router>
 	)
 }
 

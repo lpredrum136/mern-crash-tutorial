@@ -6,3 +6,5 @@ npm i --save-dev nodemon
 npx create-react-app client
 npm install react-bootstrap bootstrap
 them css bootswatch vao index.js: Minty
+
+npm i react-router-dom
