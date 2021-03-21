@@ -38,7 +38,7 @@ const AuthContextProvider = ({ children }) => {
 		}
 	}
 
-	const authContextData = { isAuthenticated, loginUser, dispatch }
+	const authContextData = { isAuthenticated, loginUser, registerUser, dispatch }
 
 	return (
 		<AuthContext.Provider value={authContextData}>

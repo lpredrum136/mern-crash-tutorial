@@ -2,9 +2,8 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import AlertMessage from './AlertMessage'
 import { Fragment, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
-import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
 	const history = useHistory()
