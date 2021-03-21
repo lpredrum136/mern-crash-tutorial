@@ -1,9 +1,13 @@
 export const authReducer = (state, action) => {
-	const { type } = action
+	const { type, payload } = action
 
 	switch (type) {
-		case 'TOGGLE_AUTH':
-			return !state
+		case 'USER_LOADED':
+			return {
+				...state,
+				authLoading: false,
+				isAuthenticated: payload
+			}
 
 		default:
 			return state
