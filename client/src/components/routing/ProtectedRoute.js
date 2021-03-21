@@ -8,7 +8,12 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 		authInfo: { authLoading, isAuthenticated }
 	} = useContext(AuthContext)
 
-	if (authLoading) return <Spinner animation='border' variant='info' />
+	if (authLoading)
+		return (
+			<div className='spinner-container'>
+				<Spinner animation='border' variant='info' />
+			</div>
+		)
 
 	return (
 		<Route
