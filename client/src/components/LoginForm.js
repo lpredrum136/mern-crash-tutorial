@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import AlertMessage from './AlertMessage'
-import { Fragment, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 
@@ -35,7 +35,7 @@ const LoginForm = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Form className='my-4' onSubmit={login}>
 				<AlertMessage info={alert} />
 
@@ -73,7 +73,7 @@ const LoginForm = () => {
 					</Button>
 				</Link>
 			</p>
-		</Fragment>
+		</>
 	)
 }
 

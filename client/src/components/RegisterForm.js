@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { Fragment, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import AlertMessage from './AlertMessage'
@@ -45,7 +45,7 @@ const RegisterForm = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Form className='my-4' onSubmit={register}>
 				<AlertMessage info={alert} />
 
@@ -94,7 +94,7 @@ const RegisterForm = () => {
 					</Button>
 				</Link>
 			</p>
-		</Fragment>
+		</>
 	)
 }
 

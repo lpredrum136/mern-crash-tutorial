@@ -1,7 +1,7 @@
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import { AuthContext } from '../contexts/AuthContext'
-import { useContext, Fragment } from 'react'
+import { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 
@@ -21,10 +21,10 @@ const Auth = ({ authRoute }) => {
 	else if (isAuthenticated) return <Redirect to='/dashboard' />
 	else
 		body = (
-			<Fragment>
+			<>
 				{authRoute === 'login' && <LoginForm />}
 				{authRoute === 'register' && <RegisterForm />}
-			</Fragment>
+			</>
 		)
 	return (
 		<div className='landing'>
