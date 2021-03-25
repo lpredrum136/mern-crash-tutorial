@@ -24,7 +24,7 @@ router.get('/', verifyToken, async (req, res) => {
 // @desc Create post
 // @access Private
 router.post('/', verifyToken, async (req, res) => {
-	const { title, description, url } = req.body
+	const { title, description, url, status } = req.body
 
 	// Simple validation
 	if (!title)
@@ -37,7 +37,8 @@ router.post('/', verifyToken, async (req, res) => {
 			title,
 			description: description || '',
 			url: url || '',
-			user: req.userId
+			user: req.userId,
+			status: status || 'TO LEARN'
 		})
 
 		await newPost.save()
@@ -48,11 +49,11 @@ router.post('/', verifyToken, async (req, res) => {
 	}
 })
 
-// @route POST api/posts
-// @desc Create post
+// @route PUT api/posts
+// @desc Update post
 // @access Private
 router.put('/:id', verifyToken, async (req, res) => {
-	const { title, description, url } = req.body
+	const { title, description, url, status } = req.body
 
 	// Simple validation
 
@@ -65,7 +66,8 @@ router.put('/:id', verifyToken, async (req, res) => {
 		let updatedPost = {
 			title,
 			description: description || '',
-			url: url || ''
+			url: url || '',
+			status: status || 'TO LEARN'
 		}
 
 		const postUpdateCondition = { _id: req.params.id, user: req.userId }
@@ -90,8 +92,8 @@ router.put('/:id', verifyToken, async (req, res) => {
 	}
 })
 
-// @route POST api/posts
-// @desc Create post
+// @route DELETE api/posts
+// @desc Delete post
 // @access Private
 router.delete('/:id', verifyToken, async (req, res) => {
 	try {
