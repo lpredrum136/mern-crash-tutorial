@@ -2,15 +2,18 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import learnItLogo from '../assets/logo.svg'
 import logoutIcon from '../assets/logout.svg'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 import Button from 'react-bootstrap/Button'
 
 const NavbarMenu = () => {
-	const { logoutUser } = useContext(AuthContext)
-
-	const history = useHistory()
+	const {
+		authInfo: {
+			user: { username }
+		},
+		logoutUser
+	} = useContext(AuthContext)
 
 	const logout = () => {
 		logoutUser()
@@ -47,16 +50,21 @@ const NavbarMenu = () => {
 					</Nav.Link>
 				</Nav>
 
-				<Button onClick={logout}>
-					<img
-						alt='logout'
-						src={logoutIcon}
-						width='32'
-						height='32'
-						className='mr-2'
-					/>{' '}
-					Logout
-				</Button>
+				<Nav>
+					<Nav.Link className='font-weight-bolder text-white' disabled>
+						Welcome {username}
+					</Nav.Link>
+					<Button className='font-weight-bolder text-white' onClick={logout}>
+						<img
+							alt='logout'
+							src={logoutIcon}
+							width='32'
+							height='32'
+							className='mr-2'
+						/>{' '}
+						Logout
+					</Button>
+				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
 	)

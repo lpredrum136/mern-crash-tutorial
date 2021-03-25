@@ -9,23 +9,29 @@ export const AuthContext = createContext()
 const AuthContextProvider = ({ children }) => {
 	const [authInfo, dispatch] = useReducer(authReducer, {
 		authLoading: true,
-		isAuthenticated: false
+		isAuthenticated: false,
+		user: null
 	})
 
-	useEffect(() => {
-		const loadUser = async () => {
-			console.log('Checking user...')
-			if (localStorage[localStorageTokenName])
-				setAuthToken(localStorage[localStorageTokenName])
+	// Authenticate user
+	const loadUser = async () => {
+		console.log('Checking user...')
+		if (localStorage[localStorageTokenName])
+			setAuthToken(localStorage[localStorageTokenName])
 
-			try {
-				const response = await axios.get(`${apiUrl}/auth`)
-				if (response.data.success) dispatch({ type: 'SET_AUTH', payload: true })
-			} catch (error) {
-				dispatch({ type: 'SET_AUTH', payload: false })
-			}
+		try {
+			const response = await axios.get(`${apiUrl}/auth`)
+			if (response.data.success)
+				dispatch({
+					type: 'SET_AUTH',
+					payload: { isAuthenticated: true, user: response.data.user }
+				})
+		} catch (error) {
+			dispatch({ type: 'SET_AUTH', payload: false })
 		}
+	}
 
+	useEffect(() => {
 		loadUser()
 	}, [])
 
@@ -36,7 +42,7 @@ const AuthContextProvider = ({ children }) => {
 			if (response.data.success)
 				localStorage.setItem(localStorageTokenName, response.data.accessToken)
 
-			dispatch({ type: 'SET_AUTH', payload: true })
+			loadUser()
 			return response.data
 		} catch (error) {
 			// when status back from API is different from OK
@@ -52,7 +58,7 @@ const AuthContextProvider = ({ children }) => {
 			if (response.data.success)
 				localStorage.setItem(localStorageTokenName, response.data.accessToken)
 
-			dispatch({ type: 'SET_AUTH', payload: true })
+			loadUser()
 			return response.data
 		} catch (error) {
 			// when status back from API is different from OK
