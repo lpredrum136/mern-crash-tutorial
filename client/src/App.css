@@ -37,3 +37,30 @@
 	-webkit-transform: translateX(-50%) translateY(-50%);
 	transform: translateX(-50%) translateY(-50%);
 }
+
+/* Post button */
+.post-button {
+	padding-top: 0;
+	background: transparent;
+	border: none;
+}
+
+.post-button:hover {
+	background: transparent;
+}
+
+a.post-button.btn:focus,
+a.post-button.btn:active {
+	outline: none;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+button.post-button.btn:focus,
+button.post-button.btn:active {
+	outline: none;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}

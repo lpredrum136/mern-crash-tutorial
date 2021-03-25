@@ -20,7 +20,7 @@ const NavbarMenu = () => {
 	}
 
 	return (
-		<Navbar expand='lg' bg='primary' variant='dark'>
+		<Navbar expand='lg' bg='primary' variant='dark' className='shadow'>
 			<Navbar.Brand className='font-weight-bolder text-white'>
 				<img
 					alt='learnit-logo'
@@ -54,14 +54,18 @@ const NavbarMenu = () => {
 					<Nav.Link className='font-weight-bolder text-white' disabled>
 						Welcome {username}
 					</Nav.Link>
-					<Button className='font-weight-bolder text-white' onClick={logout}>
+					<Button
+						variant='secondary'
+						className='font-weight-bolder text-white'
+						onClick={logout}
+					>
 						<img
 							alt='logout'
 							src={logoutIcon}
 							width='32'
 							height='32'
 							className='mr-2'
-						/>{' '}
+						/>
 						Logout
 					</Button>
 				</Nav>
