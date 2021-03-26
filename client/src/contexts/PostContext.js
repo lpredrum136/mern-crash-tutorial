@@ -46,6 +46,18 @@ const PostContextProvider = ({ children }) => {
 		}
 	}
 
+	// Delete post
+	const deletePost = async postId => {
+		try {
+			const response = await axios.delete(`${apiUrl}/posts/${postId}`)
+			if (response.data.success) {
+				dispatch({ type: 'DELETE_POST', payload: postId })
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	// Context data
 	const postContextData = {
 		postState,
@@ -55,6 +67,7 @@ const PostContextProvider = ({ children }) => {
 		setShowAddPostModal,
 		showToast,
 		setShowToast,
+		deletePost,
 		dispatch
 	}
 

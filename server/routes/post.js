@@ -101,8 +101,8 @@ router.put('/:id', verifyToken, async (req, res) => {
 // @access Private
 router.delete('/:id', verifyToken, async (req, res) => {
 	try {
-		const postUpdateCondition = { _id: req.params.id, user: req.userId }
-		const deletedPost = await Post.findOneAndDelete(postUpdateCondition)
+		const postDeleteCondition = { _id: req.params.id, user: req.userId }
+		const deletedPost = await Post.findOneAndDelete(postDeleteCondition)
 
 		// User not authorised to update post
 		if (!deletedPost)

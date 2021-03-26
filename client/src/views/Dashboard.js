@@ -33,7 +33,7 @@ const Dashboard = () => {
 	// Start: Get all posts
 	useEffect(() => {
 		getPosts()
-	}, [getPosts])
+	}, [])
 
 	let body = null
 
@@ -71,18 +71,18 @@ const Dashboard = () => {
 				</Row>
 
 				{/* Add Post functionality */}
-				{/* <OverlayTrigger
+				<OverlayTrigger
 					placement='left'
 					// show={true}
 					overlay={<Tooltip>Add a new thing to learn</Tooltip>}
-				> */}
-				<Button
-					className='btn-floating'
-					onClick={setShowAddPostModal.bind(this, true)}
 				>
-					<img alt='edit' src={addIcon} width='60' height='60' />
-				</Button>
-				{/* </OverlayTrigger> */}
+					<Button
+						className='btn-floating'
+						onClick={setShowAddPostModal.bind(this, true)}
+					>
+						<img alt='edit' src={addIcon} width='60' height='60' />
+					</Button>
+				</OverlayTrigger>
 
 				<AddPostModal />
 
