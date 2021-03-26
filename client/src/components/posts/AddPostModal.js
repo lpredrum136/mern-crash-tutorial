@@ -1,7 +1,6 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
 import { useState } from 'react'
 
 const AddPostModal = ({ show, close, addPost }) => {
@@ -24,7 +23,8 @@ const AddPostModal = ({ show, close, addPost }) => {
 
 	const onSubmit = event => {
 		event.preventDefault()
-		addPost({ ...newPost, url: `https://${url}` })
+		addPost(newPost)
+		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
 	}
 
 	return (
@@ -61,18 +61,13 @@ const AddPostModal = ({ show, close, addPost }) => {
 					</Form.Group>
 
 					<Form.Group>
-						<InputGroup className='mb-2 mr-sm-2'>
-							<InputGroup.Prepend>
-								<InputGroup.Text>https://</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control
-								type='text'
-								placeholder='Youtube Tutorial URL'
-								name='url'
-								value={url}
-								onChange={onChangeNewPostForm}
-							/>
-						</InputGroup>
+						<Form.Control
+							type='text'
+							placeholder='Youtube Tutorial URL'
+							name='url'
+							value={url}
+							onChange={onChangeNewPostForm}
+						/>
 					</Form.Group>
 				</Modal.Body>
 				<Modal.Footer>

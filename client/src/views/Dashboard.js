@@ -13,6 +13,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import SinglePost from '../components/posts/SinglePost'
 import AddPostModal from '../components/posts/AddPostModal'
+import Toast from 'react-bootstrap/Toast'
 
 const Dashboard = () => {
 	const {
@@ -22,15 +23,39 @@ const Dashboard = () => {
 	} = useContext(AuthContext)
 
 	const [showAddPostModal, setShowAddPostModal] = useState(false)
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
 	const [postsLoading, setPostsLoading] = useState(true)
 	const [posts, setPosts] = useState([])
 
 	const addPost = async newPost => {
 		try {
 			const response = await axios.post(`${apiUrl}/posts`, newPost)
-			console.log(response.data)
+			if (response.data.success) {
+				setShowAddPostModal(false)
+				setShowToast({
+					show: true,
+					message: response.data.message,
+					type: 'success'
+				})
+
+				setPosts([...posts, response.data.post])
+			}
 		} catch (error) {
-			console.log(error)
+			if (error.response.data.message) {
+				setShowAddPostModal(false)
+				setShowToast({
+					show: true,
+					message: error.response.data.message,
+					type: 'danger'
+				})
+			} else {
+				setShowAddPostModal(false)
+				setShowToast({ show: true, message: error.message, type: 'danger' })
+			}
 		}
 	}
 
@@ -103,6 +128,23 @@ const Dashboard = () => {
 					close={setShowAddPostModal}
 					addPost={addPost}
 				/>
+
+				<Toast
+					show={showToast.show}
+					style={{ position: 'fixed', top: '10%', right: '10px' }}
+					onClose={setShowToast.bind(this, {
+						show: false,
+						message: '',
+						type: null
+					})}
+					className={`bg-${showToast.type} text-white`}
+					delay={3000}
+					autohide
+				>
+					<Toast.Body>
+						<strong>{showToast.message}</strong>
+					</Toast.Body>
+				</Toast>
 			</>
 		)
 	}

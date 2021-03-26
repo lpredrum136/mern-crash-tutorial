@@ -36,13 +36,17 @@ router.post('/', verifyToken, async (req, res) => {
 		const newPost = new Post({
 			title,
 			description: description || '',
-			url: url || '',
+			url: (url.startsWith('https://') ? url : `https://${url}`) || '',
 			user: req.userId,
 			status: status || 'TO LEARN'
 		})
 
 		await newPost.save()
-		res.json({ success: true, message: 'Post created successfully' })
+		res.json({
+			success: true,
+			message: 'Happy learning!',
+			post: newPost
+		})
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({ success: false, message: 'Internal server error' })
