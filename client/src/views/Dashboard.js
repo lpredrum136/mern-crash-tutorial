@@ -8,9 +8,10 @@ import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { apiUrl } from '../contexts/constants'
-import playIcon from '../assets/play-btn.svg'
-import editIcon from '../assets/pencil.svg'
-import deleteIcon from '../assets/trash.svg'
+import ActionButtons from '../components/ActionButtons'
+import addIcon from '../assets/plus-circle-fill.svg'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 const Dashboard = () => {
 	const {
@@ -64,42 +65,37 @@ const Dashboard = () => {
 		)
 	} else {
 		body = (
-			<Row className='row-cols-1 row-cols-md-3 g-4 mx-auto mt-3'>
-				{posts.map(({ _id, title, description, url }) => (
-					<Col key={_id} className='my-2'>
-						<Card className='shadow'>
-							<Card.Body>
-								<Card.Title>
-									<Row>
-										<Col>{title}</Col>
-										<Col className='text-right'>
-											<Button
-												className='post-button'
-												href={url}
-												target='_blank'
-											>
-												<img alt='play' src={playIcon} width='32' height='32' />
-											</Button>
-											<Button className='post-button'>
-												<img alt='edit' src={editIcon} width='24' height='24' />
-											</Button>
-											<Button className='post-button'>
-												<img
-													alt='delete'
-													src={deleteIcon}
-													width='24'
-													height='24'
-												/>
-											</Button>
-										</Col>
-									</Row>
-								</Card.Title>
-								<Card.Text>{description}</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				))}
-			</Row>
+			<>
+				<Row className='row-cols-1 row-cols-md-3 g-4 mx-auto mt-3'>
+					{posts.map(({ _id, title, description, url }) => (
+						<Col key={_id} className='my-2'>
+							<Card className='shadow'>
+								<Card.Body>
+									<Card.Title>
+										<Row>
+											<Col>{title}</Col>
+											<Col className='text-right'>
+												<ActionButtons url={url} />
+											</Col>
+										</Row>
+									</Card.Title>
+									<Card.Text>{description}</Card.Text>
+								</Card.Body>
+							</Card>
+						</Col>
+					))}
+				</Row>
+
+				<OverlayTrigger
+					placement='left'
+					// show={true}
+					overlay={<Tooltip>Add a new thing to learn</Tooltip>}
+				>
+					<Button className='btn-floating'>
+						<img alt='edit' src={addIcon} width='60' height='60' />
+					</Button>
+				</OverlayTrigger>
+			</>
 		)
 	}
 
