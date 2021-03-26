@@ -2,8 +2,8 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { AuthContext } from '../contexts/AuthContext'
-import AlertMessage from './AlertMessage'
+import { AuthContext } from '../../contexts/AuthContext'
+import AlertMessage from '../layout/AlertMessage'
 
 const RegisterForm = () => {
 	const history = useHistory()

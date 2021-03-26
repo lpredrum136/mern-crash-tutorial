@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button'
-import playIcon from '../assets/play-btn.svg'
-import editIcon from '../assets/pencil.svg'
-import deleteIcon from '../assets/trash.svg'
+import playIcon from '../../assets/play-btn.svg'
+import editIcon from '../../assets/pencil.svg'
+import deleteIcon from '../../assets/trash.svg'
 
 const ActionButtons = ({ url }) => {
 	return (

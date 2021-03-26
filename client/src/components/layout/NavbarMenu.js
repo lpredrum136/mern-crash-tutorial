@@ -1,9 +1,9 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import learnItLogo from '../assets/logo.svg'
-import logoutIcon from '../assets/logout.svg'
+import learnItLogo from '../../assets/logo.svg'
+import logoutIcon from '../../assets/logout.svg'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../contexts/AuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import { useContext } from 'react'
 import Button from 'react-bootstrap/Button'
 

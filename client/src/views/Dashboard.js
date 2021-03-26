@@ -11,7 +11,7 @@ import { apiUrl } from '../contexts/constants'
 import addIcon from '../assets/plus-circle-fill.svg'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import SinglePost from '../components/SinglePost'
+import SinglePost from '../components/posts/SinglePost'
 
 const Dashboard = () => {
 	const {

@@ -1,5 +1,5 @@
-import LoginForm from '../components/LoginForm'
-import RegisterForm from '../components/RegisterForm'
+import LoginForm from '../components/auth/LoginForm'
+import RegisterForm from '../components/auth/RegisterForm'
 import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
