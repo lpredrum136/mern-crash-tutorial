@@ -6,7 +6,7 @@ import NavbarMenu from '../layout/NavbarMenu'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
 	const {
-		authInfo: { authLoading, isAuthenticated }
+		authState: { authLoading, isAuthenticated }
 	} = useContext(AuthContext)
 
 	if (authLoading)

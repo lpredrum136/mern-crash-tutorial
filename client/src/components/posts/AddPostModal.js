@@ -1,9 +1,18 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { PostContext } from '../../contexts/PostContext'
 
-const AddPostModal = ({ show, close, addPost }) => {
+const AddPostModal = () => {
+	// Contexts
+	const {
+		addPost,
+		showAddPostModal,
+		setShowAddPostModal,
+		setShowToast
+	} = useContext(PostContext)
+
 	const [newPost, setNewPost] = useState({
 		title: '',
 		description: '',
@@ -15,20 +24,23 @@ const AddPostModal = ({ show, close, addPost }) => {
 
 	const closeDialog = () => {
 		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
-		close()
+		setShowAddPostModal(false)
 	}
 
 	const onChangeNewPostForm = event =>
 		setNewPost({ ...newPost, [event.target.name]: event.target.value })
 
-	const onSubmit = event => {
+	const onSubmit = async event => {
 		event.preventDefault()
-		addPost(newPost)
+		const { success, message } = await addPost(newPost)
 		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
+		setShowAddPostModal(false)
+
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	return (
-		<Modal show={show} onHide={closeDialog}>
+		<Modal show={showAddPostModal} onHide={closeDialog}>
 			<Modal.Header closeButton>
 				<Modal.Title>What do you want to learn?</Modal.Title>
 			</Modal.Header>

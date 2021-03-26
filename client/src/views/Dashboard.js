@@ -4,10 +4,9 @@ import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import axios from 'axios'
-import { useState, useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
-import { apiUrl } from '../contexts/constants'
+import { PostContext } from '../contexts/PostContext'
 import addIcon from '../assets/plus-circle-fill.svg'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
@@ -16,64 +15,25 @@ import AddPostModal from '../components/posts/AddPostModal'
 import Toast from 'react-bootstrap/Toast'
 
 const Dashboard = () => {
+	// Contexts
 	const {
-		authInfo: {
+		authState: {
 			user: { username }
 		}
 	} = useContext(AuthContext)
 
-	const [showAddPostModal, setShowAddPostModal] = useState(false)
-	const [showToast, setShowToast] = useState({
-		show: false,
-		message: '',
-		type: null
-	})
-	const [postsLoading, setPostsLoading] = useState(true)
-	const [posts, setPosts] = useState([])
+	const {
+		postState: { posts, postsLoading },
+		getPosts,
+		setShowAddPostModal,
+		showToast: { show, message, type },
+		setShowToast
+	} = useContext(PostContext)
 
-	const addPost = async newPost => {
-		try {
-			const response = await axios.post(`${apiUrl}/posts`, newPost)
-			if (response.data.success) {
-				setShowAddPostModal(false)
-				setShowToast({
-					show: true,
-					message: response.data.message,
-					type: 'success'
-				})
-
-				setPosts([...posts, response.data.post])
-			}
-		} catch (error) {
-			if (error.response.data.message) {
-				setShowAddPostModal(false)
-				setShowToast({
-					show: true,
-					message: error.response.data.message,
-					type: 'danger'
-				})
-			} else {
-				setShowAddPostModal(false)
-				setShowToast({ show: true, message: error.message, type: 'danger' })
-			}
-		}
-	}
-
+	// Start: Get all posts
 	useEffect(() => {
-		const getAllPosts = async () => {
-			try {
-				const response = await axios.get(`${apiUrl}/posts`)
-				if (response.data.success) {
-					setPosts(response.data.posts)
-					setPostsLoading(false)
-				}
-			} catch (error) {
-				setPosts(null)
-				setPostsLoading(false)
-			}
-		}
-		getAllPosts()
-	}, [])
+		getPosts()
+	}, [getPosts])
 
 	let body = null
 
@@ -103,46 +63,44 @@ const Dashboard = () => {
 		body = (
 			<>
 				<Row className='row-cols-1 row-cols-md-3 g-4 mx-auto mt-3'>
-					{posts.map(({ _id, ...postRest }) => (
-						<Col key={_id} className='my-2'>
-							<SinglePost post={postRest} />
+					{posts.map(post => (
+						<Col key={post._id} className='my-2'>
+							<SinglePost post={post} />
 						</Col>
 					))}
 				</Row>
 
-				<OverlayTrigger
+				{/* Add Post functionality */}
+				{/* <OverlayTrigger
 					placement='left'
 					// show={true}
 					overlay={<Tooltip>Add a new thing to learn</Tooltip>}
+				> */}
+				<Button
+					className='btn-floating'
+					onClick={setShowAddPostModal.bind(this, true)}
 				>
-					<Button
-						className='btn-floating'
-						onClick={setShowAddPostModal.bind(this, true)}
-					>
-						<img alt='edit' src={addIcon} width='60' height='60' />
-					</Button>
-				</OverlayTrigger>
+					<img alt='edit' src={addIcon} width='60' height='60' />
+				</Button>
+				{/* </OverlayTrigger> */}
 
-				<AddPostModal
-					show={showAddPostModal}
-					close={setShowAddPostModal}
-					addPost={addPost}
-				/>
+				<AddPostModal />
 
+				{/* After post added, show toast */}
 				<Toast
-					show={showToast.show}
+					show={show}
 					style={{ position: 'fixed', top: '10%', right: '10px' }}
 					onClose={setShowToast.bind(this, {
 						show: false,
 						message: '',
 						type: null
 					})}
-					className={`bg-${showToast.type} text-white`}
+					className={`bg-${type} text-white`}
 					delay={3000}
 					autohide
 				>
 					<Toast.Body>
-						<strong>{showToast.message}</strong>
+						<strong>{message}</strong>
 					</Toast.Body>
 				</Toast>
 			</>

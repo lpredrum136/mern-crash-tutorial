@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Badge from 'react-bootstrap/Badge'
 import ActionButtons from './ActionButtons'
 
-const SinglePost = ({ post: { status, title, description, url } }) => {
+const SinglePost = ({ post: { _id, status, title, description, url } }) => {
 	return (
 		<Card
 			className='shadow'
@@ -35,7 +35,7 @@ const SinglePost = ({ post: { status, title, description, url } }) => {
 							</Badge>
 						</Col>
 						<Col className='text-right'>
-							<ActionButtons url={url} />
+							<ActionButtons url={url} _id={_id} />
 						</Col>
 					</Row>
 				</Card.Title>

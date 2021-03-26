@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 
 const NavbarMenu = () => {
 	const {
-		authInfo: {
+		authState: {
 			user: { username }
 		},
 		logoutUser

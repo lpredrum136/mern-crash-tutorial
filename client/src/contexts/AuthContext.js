@@ -7,7 +7,7 @@ import setAuthToken from '../utils/setAuthToken'
 export const AuthContext = createContext()
 
 const AuthContextProvider = ({ children }) => {
-	const [authInfo, dispatch] = useReducer(authReducer, {
+	const [authState, dispatch] = useReducer(authReducer, {
 		authLoading: true,
 		isAuthenticated: false,
 		user: null
@@ -74,7 +74,7 @@ const AuthContextProvider = ({ children }) => {
 	}
 
 	const authContextData = {
-		authInfo,
+		authState,
 		loginUser,
 		registerUser,
 		logoutUser,

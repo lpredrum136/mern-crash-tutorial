@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 const Auth = ({ authRoute }) => {
 	const {
-		authInfo: { authLoading, isAuthenticated }
+		authState: { authLoading, isAuthenticated }
 	} = useContext(AuthContext)
 
 	let body
