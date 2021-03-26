@@ -8,11 +8,10 @@ import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { apiUrl } from '../contexts/constants'
-import ActionButtons from '../components/ActionButtons'
 import addIcon from '../assets/plus-circle-fill.svg'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import Badge from 'react-bootstrap/Badge'
+import SinglePost from '../components/SinglePost'
 
 const Dashboard = () => {
 	const {
@@ -68,44 +67,9 @@ const Dashboard = () => {
 		body = (
 			<>
 				<Row className='row-cols-1 row-cols-md-3 g-4 mx-auto mt-3'>
-					{posts.map(({ _id, title, description, url, status }) => (
+					{posts.map(({ _id, ...postRest }) => (
 						<Col key={_id} className='my-2'>
-							<Card
-								className='shadow'
-								border={
-									status === 'LEARNED'
-										? 'success'
-										: status === 'LEARNING'
-										? 'warning'
-										: 'danger'
-								}
-							>
-								<Card.Body>
-									<Card.Title>
-										<Row>
-											<Col>
-												<p className='post-title'>{title}</p>
-												<Badge
-													pill
-													variant={
-														status === 'LEARNED'
-															? 'success'
-															: status === 'LEARNING'
-															? 'warning'
-															: 'danger'
-													}
-												>
-													{status}
-												</Badge>
-											</Col>
-											<Col className='text-right'>
-												<ActionButtons url={url} />
-											</Col>
-										</Row>
-									</Card.Title>
-									<Card.Text>{description}</Card.Text>
-								</Card.Body>
-							</Card>
+							<SinglePost post={postRest} />
 						</Col>
 					))}
 				</Row>
