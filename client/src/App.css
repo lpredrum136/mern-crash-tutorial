@@ -98,3 +98,15 @@ button.post-button.btn:active {
 .tooltip-inner {
 	background: #78c2ad;
 }
+
+/* Post border thicker */
+.border-success,
+.border-warning,
+.border-danger {
+	border-width: 2px;
+}
+
+/* Post title */
+.post-title {
+	margin-bottom: 0.5rem;
+}
