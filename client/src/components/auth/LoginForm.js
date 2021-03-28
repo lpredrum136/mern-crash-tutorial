@@ -2,12 +2,10 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import AlertMessage from '../layout/AlertMessage'
 import { useState, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 
 const LoginForm = () => {
-	const history = useHistory()
-
 	const { loginUser } = useContext(AuthContext)
 
 	const [alert, setAlert] = useState(null)
@@ -30,7 +28,7 @@ const LoginForm = () => {
 			setAlert({ type: 'danger', message: loginData.message })
 			setTimeout(() => setAlert(null), 5000)
 		} else {
-			history.push('/dashboard')
+			// history.push('/dashboard') // no need to because parent component already returned Redirect when state isAuthenticated is changed
 		}
 	}
 

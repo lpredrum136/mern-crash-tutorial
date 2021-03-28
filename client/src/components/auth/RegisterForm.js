@@ -1,13 +1,11 @@
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useContext, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import AlertMessage from '../layout/AlertMessage'
 
 const RegisterForm = () => {
-	const history = useHistory()
-
 	const { registerUser } = useContext(AuthContext)
 
 	const [alert, setAlert] = useState(null)
@@ -40,7 +38,7 @@ const RegisterForm = () => {
 			setAlert({ type: 'danger', message: registerData.message })
 			setTimeout(() => setAlert(null), 5000)
 		} else {
-			history.push('/dashboard')
+			// history.push('/dashboard') // no need to because parent component already returned Redirect when state isAuthenticated is changed
 		}
 	}
 
