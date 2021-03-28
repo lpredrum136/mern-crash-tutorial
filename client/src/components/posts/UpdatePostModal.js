@@ -7,9 +7,7 @@ import { PostContext } from '../../contexts/PostContext'
 const UpdatePostModal = () => {
 	// Contexts
 	const {
-		postState: {
-			post: { _id, title, description, url, status }
-		},
+		postState: { post },
 		updatePost,
 		showUpdatePostModal,
 		setShowUpdatePostModal,
@@ -17,22 +15,16 @@ const UpdatePostModal = () => {
 	} = useContext(PostContext)
 
 	// State
-	const [newPost, setNewPost] = useState({
-		_id,
-		title,
-		description,
-		url,
-		status
-	})
+	const [newPost, setNewPost] = useState(post)
 
 	// Whenever single post chosen (in context) is changed, update newPost local state. If you don't do this, even when single post chosen (in context) is changed, the state of this component
 	// stays the same because it is simply not bound to the context change
 	useEffect(() => {
-		setNewPost({ _id, title, description, url, status })
-	}, [_id])
+		setNewPost(post)
+	}, [post])
 
 	const closeDialog = () => {
-		setNewPost({ _id, title, description, url, status })
+		setNewPost(post)
 		setShowUpdatePostModal(false)
 	}
 
@@ -42,7 +34,7 @@ const UpdatePostModal = () => {
 	const onSubmit = async event => {
 		event.preventDefault()
 		const { success, message } = await updatePost(newPost)
-		setNewPost({ _id, title, description, url, status })
+		// setNewPost(post) // no need to because useEffect above already does that
 		setShowUpdatePostModal(false)
 
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
