@@ -49,16 +49,23 @@ const Dashboard = () => {
 		body = <Alert variant='danger'>Internal server error</Alert>
 	} else if (posts.length === 0) {
 		body = (
-			<Card className='text-center mx-5 my-5'>
-				<Card.Header as='h1'>Hi {username}</Card.Header>
-				<Card.Body>
-					<Card.Title>Welcome to LearnIt</Card.Title>
-					<Card.Text>
-						Click the button below to create your first skill to learn
-					</Card.Text>
-					<Button variant='primary'>LearnIt!</Button>
-				</Card.Body>
-			</Card>
+			<>
+				<Card className='text-center mx-5 my-5'>
+					<Card.Header as='h1'>Hi {username}</Card.Header>
+					<Card.Body>
+						<Card.Title>Welcome to LearnIt</Card.Title>
+						<Card.Text>
+							Click the button below to track your first skill to learn
+						</Card.Text>
+						<Button
+							variant='primary'
+							onClick={setShowAddPostModal.bind(this, true)}
+						>
+							LearnIt!
+						</Button>
+					</Card.Body>
+				</Card>
+			</>
 		)
 	} else {
 		body = (
@@ -84,34 +91,37 @@ const Dashboard = () => {
 						<img alt='edit' src={addIcon} width='60' height='60' />
 					</Button>
 				</OverlayTrigger>
-
-				<AddPostModal />
-
-				{/* After post added, show toast */}
-				<Toast
-					show={show}
-					style={{ position: 'fixed', top: '10%', right: '10px' }}
-					onClose={setShowToast.bind(this, {
-						show: false,
-						message: '',
-						type: null
-					})}
-					className={`bg-${type} text-white`}
-					delay={3000}
-					autohide
-				>
-					<Toast.Body>
-						<strong>{message}</strong>
-					</Toast.Body>
-				</Toast>
-
-				{/* Update post functionality  */}
-				{post !== null && <UpdatePostModal />}
 			</>
 		)
 	}
 
-	return body
+	return (
+		<>
+			{body}
+			<AddPostModal />
+
+			{/* After post added, show toast */}
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				className={`bg-${type} text-white`}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
+
+			{/* Update post functionality  */}
+			{post !== null && <UpdatePostModal />}
+		</>
+	)
 }
 
 export default Dashboard
