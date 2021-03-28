@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Auth from './views/Auth'
 import Dashboard from './views/Dashboard'
 import About from './views/About'
+import Landing from './components/layout/Landing'
 import AuthContextProvider from './contexts/AuthContext'
 import PostContextProvider from './contexts/PostContext'
 import ProtectedRoute from './components/routing/ProtectedRoute'
@@ -13,6 +14,7 @@ function App() {
 			<PostContextProvider>
 				<Router>
 					<Switch>
+						<Route exact path='/' component={Landing} />
 						<ProtectedRoute exact path='/dashboard' component={Dashboard} />
 						<ProtectedRoute exact path='/about' component={About} />
 						<Route
