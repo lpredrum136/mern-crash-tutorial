@@ -8,11 +8,14 @@ export const PostContext = createContext()
 const PostContextProvider = ({ children }) => {
 	// State
 	const [postState, dispatch] = useReducer(postReducer, {
+		post: null,
 		posts: [],
 		postsLoading: true
 	})
 
 	const [showAddPostModal, setShowAddPostModal] = useState(false)
+	const [showUpdatePostModal, setShowUpdatePostModal] = useState(false)
+
 	const [showToast, setShowToast] = useState({
 		show: false,
 		message: '',
@@ -58,6 +61,31 @@ const PostContextProvider = ({ children }) => {
 		}
 	}
 
+	// Pinpoint single post to update
+	const findPost = postId => {
+		const post = postState.posts.find(post => post._id === postId)
+		dispatch({ type: 'FIND_POST', payload: post })
+	}
+
+	// Update post
+	const updatePost = async updatedPost => {
+		try {
+			const response = await axios.put(
+				`${apiUrl}/posts/${updatedPost._id}`,
+				updatedPost
+			)
+
+			if (response.data.success) {
+				dispatch({ type: 'UPDATE_POST', payload: response.data.post })
+				return response.data
+			}
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
+
 	// Context data
 	const postContextData = {
 		postState,
@@ -68,6 +96,10 @@ const PostContextProvider = ({ children }) => {
 		showToast,
 		setShowToast,
 		deletePost,
+		showUpdatePostModal,
+		setShowUpdatePostModal,
+		findPost,
+		updatePost,
 		dispatch
 	}
 

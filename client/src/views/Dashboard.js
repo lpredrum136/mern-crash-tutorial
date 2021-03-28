@@ -12,6 +12,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import SinglePost from '../components/posts/SinglePost'
 import AddPostModal from '../components/posts/AddPostModal'
+import UpdatePostModal from '../components/posts/UpdatePostModal'
 import Toast from 'react-bootstrap/Toast'
 
 const Dashboard = () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
 	} = useContext(AuthContext)
 
 	const {
-		postState: { posts, postsLoading },
+		postState: { posts, postsLoading, post },
 		getPosts,
 		setShowAddPostModal,
 		showToast: { show, message, type },
@@ -103,6 +104,9 @@ const Dashboard = () => {
 						<strong>{message}</strong>
 					</Toast.Body>
 				</Toast>
+
+				{/* Update post functionality  */}
+				{post !== null && <UpdatePostModal />}
 			</>
 		)
 	}
