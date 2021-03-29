@@ -21,3 +21,20 @@ heroku config:set DB_PASSWORD=yourpassword
 heroku config:set ACCESS_TOKEN_SECRET=youraccesstokensecret
 
 copy URL to frontend to test
+
+Deploy frontend: Netlify
+Change base dir to client
+
+Avoid warning === error? Build command: CI='' npm run build
+
+page not found when routing?
+https://dev.to/rajeshroyal/page-not-found-error-on-netlify-reactjs-react-router-solved-43oa
+
+bootswatch theme not working:
+- add CDN to index.html and remove import css in index.js 
+https://react-bootstrap.github.io/getting-started/introduction/
+https://www.jsdelivr.com/package/npm/bootswatch?path=dist%2Fminty
+(find bootstrap.min.css and copy SRI and HTML)
+
+- or you can install bootswatch via npm so it's bundled
+https://bootswatch.com/help/
