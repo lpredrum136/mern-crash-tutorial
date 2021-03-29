@@ -8,3 +8,6 @@ npm install react-bootstrap bootstrap react-router-dom axios
 them css bootswatch vao index.js: Minty
 
 Protected route. TUong la duoc roi nhung neu refresh thi se bi logout nen can loadUser tai App.js
+
+heroku login
+heroku create
