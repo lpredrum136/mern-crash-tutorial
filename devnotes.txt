@@ -11,3 +11,13 @@ Protected route. TUong la duoc roi nhung neu refresh thi se bi logout nen can lo
 
 heroku login
 heroku create
+heroku git:remote -a damp-sea-26656
+them procfile
+change PORT and start script in server/package.json
+
+git subtree push --prefix server heroku master
+heroku config:set DB_USERNAME=yourusername
+heroku config:set DB_PASSWORD=yourpassword
+heroku config:set ACCESS_TOKEN_SECRET=youraccesstokensecret
+
+copy URL to frontend to test
