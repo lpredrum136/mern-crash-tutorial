@@ -27,7 +27,12 @@ const AuthContextProvider = ({ children }) => {
 					payload: { isAuthenticated: true, user: response.data.user }
 				})
 		} catch (error) {
-			dispatch({ type: 'SET_AUTH', payload: false })
+			localStorage.removeItem(localStorageTokenName)
+			setAuthToken(null)
+			dispatch({
+				type: 'SET_AUTH',
+				payload: { isAuthenticated: false, user: null }
+			})
 		}
 	}
 
@@ -42,7 +47,7 @@ const AuthContextProvider = ({ children }) => {
 			if (response.data.success)
 				localStorage.setItem(localStorageTokenName, response.data.accessToken)
 
-			loadUser()
+			await loadUser()
 			return response.data
 		} catch (error) {
 			// when status back from API is different from OK

@@ -44,9 +44,6 @@ const Dashboard = () => {
 				<Spinner animation='border' variant='info' />
 			</div>
 		)
-	} else if (posts === null) {
-		// Server error
-		body = <Alert variant='danger'>Internal server error</Alert>
 	} else if (posts.length === 0) {
 		body = (
 			<>

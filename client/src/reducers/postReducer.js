@@ -9,7 +9,7 @@ export const postReducer = (state, action) => {
 				postsLoading: false
 			}
 
-		case 'POSTS_LOADED_FAILED':
+		case 'POSTS_LOADED_FAIL':
 			return {
 				...state,
 				posts: [],
