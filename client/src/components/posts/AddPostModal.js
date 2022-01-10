@@ -23,18 +23,21 @@ const AddPostModal = () => {
 	const { title, description, url } = newPost
 
 	const closeDialog = () => {
-		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
-		setShowAddPostModal(false)
+		resetAddPostData()
 	}
 
 	const onChangeNewPostForm = event =>
 		setNewPost({ ...newPost, [event.target.name]: event.target.value })
 
+	const resetAddPostData = () => {
+		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
+		setShowAddPostModal(false)
+	}
+
 	const onSubmit = async event => {
 		event.preventDefault()
 		const { success, message } = await addPost(newPost)
-		setNewPost({ title: '', description: '', url: '', status: 'TO LEARN' })
-		setShowAddPostModal(false)
+		resetAddPostData()
 
 		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
